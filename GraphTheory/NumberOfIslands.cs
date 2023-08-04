@@ -4,20 +4,20 @@
     {
         public static int NumIslands(char[][] grid)
         {
-            var a = new int[grid[0].Length];
-            var b = new int[grid[0].Length];
-            var c = new int[grid[0].Length];
-            int max = 0;
-            int joined = 0;
+            var a = new short[grid[0].Length];
+            var b = new short[grid[0].Length];
+            short[] c = null;
+            short max = 0;
+            short joined = 0;
 
-            int cprev = 0;
-            int ccurr = 0;
+            bool cprev = false;
+            bool ccurr = false;
             for (int i = 0; i < grid[0].Length; i++)
             {
-                ccurr = (byte)grid[0][i] - (byte)'0';
-                if (ccurr == 1)
+                ccurr = grid[0][i] == '1';
+                if (ccurr)
                 {
-                    a[i] = cprev == 0 ? ++max : a[i-1];
+                    a[i] = cprev ? a[i-1] : ++max;
                 }
                 else
                 {
@@ -29,21 +29,21 @@
             for (int i = 1; i < grid.Length; i++)
             {
                 Console.WriteLine($"{i - 1}:" + string.Join(',', a));
-                cprev = (byte)grid[i][0] - (byte)'0';
+                cprev = grid[i][0] == '1';
                 ccurr = cprev;
-                if (ccurr == 1 && a[0] > 0)
+                if (ccurr && a[0] > 0)
                     b[0] = a[0];
-                else if (ccurr == 1)
+                else if (ccurr)
                     b[0] = ++max;
                 else
                     b[0] = 0;
                 
                 for (int j = 1; j < a.Length; j++)
                 {
-                    ccurr = (byte)grid[i][j] - (byte)'0';
-                    if (ccurr == 1 && a[j] > 0)
+                    ccurr = grid[i][j] == '1';
+                    if (ccurr && a[j] > 0)
                     {
-                        if (cprev == 0)
+                        if (!cprev)
                         {
                             b[j] = a[j];
                         }
@@ -78,9 +78,9 @@
                             }
                         }
                     }
-                    else if (ccurr == 1)
+                    else if (ccurr)
                     {
-                        if (cprev > 0)
+                        if (cprev)
                             b[j] = b[j-1];
                         else
                             b[j] = ++max;
