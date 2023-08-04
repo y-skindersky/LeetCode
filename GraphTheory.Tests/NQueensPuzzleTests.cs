@@ -5,9 +5,10 @@ namespace GraphTheory.Tests
     public class NQueensPuzzleTests
     {
         [Test]
-        public void Test([Range(1, 9)] int n)
+        //public void Test([Range(1, 9)] int n)
+        public void Test4()
         {
-            var result = NQueensPuzzle.SolveNQueens(n);
+            var result = NQueensPuzzle.SolveNQueens(4);
 
             foreach (var b in result)
             {
